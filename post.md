@@ -112,7 +112,7 @@ For *Here Be Monsters*, we built a custom CMS (which internally we call `TNT`) t
 
 ![](http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/postsharp_localization_tnt.png)
 
-We wanted to solve a number of issues with TNT:
+We wanted to tackle a number of challenges with TNT:
 * version control game design data
 * allow game designers to work on data simultaneously
 * allow game designers to publish and test data changes in isolation (in dev)
@@ -125,7 +125,7 @@ TNT provides a thin layer on top of Git and supports the [Gitflow](http://nvie.c
 
 ![](http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/tnt_branch.gif)
 
-Just before every release goes out - around the time the `release` branch is created - the game designers will sit down with both client and backend developers. They will go through the data changes together, using Git's diff tool, and catch any last-minute mistakes - perhaps a game designer misunderstood how a feature works and had input the data incorrectly.
+Just before every release goes out - around the time the `release` branch is created - the game designers will sit down with both client and backend developers. They will go through the data changes together, using Git's diff tool, and catch any last-minute mistakes - perhaps a game designer misunderstood how a feature works and had entered incorrect data.
 ![](http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/tnt_git_flow.gif)
 
 ### Publishing & Testing data in Isolation
@@ -134,16 +134,16 @@ When a game designer wishes to test his changes, he is able to publish the data 
 
 ![](http://theburningmonk.com/WordPress/wp-content/uploads/2015/03/tnt_publish.gif)
 
-The changes will be available only through a special URL (sent to you by email after your data is successfully published) as our game server also support running multiple versions of game design data. This way, it eliminated the need to have multiple dev environments, and removed the friction of working with a shared dev environment.
+The changes will be available only for him as our game server also support running multiple versions of game design data. This way, it eliminated the need to have multiple dev environments, and removed the usual frictions of working with a shared dev environment.
 
-This capability also allowed us to release data changes to our production environment without impacting live users. This way, the QA team can run smoke tests and make sure everything is ok before we make the changes available to everyone. You can think of it as a sort of [canary release](http://martinfowler.com/bliki/CanaryRelease.html), except the canary is your QA team.
+This capability also allow us to release data changes to production without impacting live users. This way, the QA team can run smoke tests and make sure everything is ok before we make the changes available to everyone. You can think of it as a sort of [canary release](http://martinfowler.com/bliki/CanaryRelease.html), where the canary is your QA team.
 
 ### Publishing data for localization
 
-When you publish your changes, TNT communicates with another service which is responsible for ingesting the raw JSON files and *gettext* files and:
+When you publish your changes, TNT communicates with another service which is responsible for ingesting the raw JSON and *gettext* files and:
 1. perform deeper, more in-depth validation
 2. perform any pre-computation as optimization
-3. transform data into DTOs (localization happens during this step)
+3. transform data into DTOs (**localization** happens during this step)
 4. serialize DTOs in formats that the various consumers want - JSON, AMF, etc.
 5. compress and distribute the files according to the needs for the consumers
 6. (optional) export data into [Neo4j to run economic analysis](https://www.airpair.com/neo4j/posts/modelling-game-economy-with-neo4j)
